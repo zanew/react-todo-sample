@@ -1,0 +1,54 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+function TodoItem(props) {
+    console.log(props.todos);
+
+    let getStyle = () => {
+        return {
+            background: '#f4f4f4',
+            textDecoration: props.todo.completed ? 'line-through' : 'none',
+            borderBottom: '1px #ccc dotted',
+        }
+    }
+
+    // destructuring
+    const { id, title } = props.todo;
+
+    // you can *bind* little important bits of state to pass up the component
+    // hierarchy
+    return (
+        <div style={getStyle()}>
+          <p>
+            <input type="checkbox" onChange={props.markComplete.bind(this, id)} /> {' '}
+            { title }
+            <button onClick={props.delTodo.bind(this, id)} style={btnStyle}>x</button>
+        </p>
+        </div>
+    );
+}
+
+// PropTypes
+TodoItem.propTypes = {
+    todo: PropTypes.object.isRequired
+}
+
+const btnStyle = {
+    background: '#ff0000',
+    color: '#fff',
+    border: 'none',
+    // 5 top and bottom 10 left and right
+    padding: '5px 5px',
+    borderRadius: '50%',
+    cursor: 'pointer',
+    float: 'right'
+}
+
+// PropTypes
+TodoItem.propTypes = {
+    todo: PropTypes.object.isRequired,
+    markComplete: PropTypes.func.isRequired,
+    delTodo: PropTypes.func.isRequired
+};
+
+export default TodoItem;
